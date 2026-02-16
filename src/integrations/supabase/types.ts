@@ -47,6 +47,7 @@ export type Database = {
           id: string
           is_read: boolean | null
           message: string
+          ticket_id: string | null
           title: string
           user_id: string
         }
@@ -55,6 +56,7 @@ export type Database = {
           id?: string
           is_read?: boolean | null
           message: string
+          ticket_id?: string | null
           title: string
           user_id: string
         }
@@ -63,10 +65,19 @@ export type Database = {
           id?: string
           is_read?: boolean | null
           message?: string
+          ticket_id?: string | null
           title?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "notifications_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: false
+            referencedRelation: "support_tickets"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       products: {
         Row: {
@@ -152,6 +163,7 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          is_admin: boolean
           message: string
           sender_id: string
           ticket_id: string
@@ -159,6 +171,7 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
+          is_admin?: boolean
           message: string
           sender_id: string
           ticket_id: string
@@ -166,6 +179,7 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
+          is_admin?: boolean
           message?: string
           sender_id?: string
           ticket_id?: string
