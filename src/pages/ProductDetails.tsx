@@ -38,34 +38,34 @@ const ProductDetails = () => {
   }, [id]);
 
   if (loading) return (<div className="min-h-screen bg-background"><Navbar /><div className="flex items-center justify-center py-32"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" /></div></div>);
-  if (!product) return (<div className="min-h-screen bg-background"><Navbar /><div className="container mx-auto px-4 py-32 text-center"><h1 className="text-2xl font-display font-semibold">Product not found</h1><Link to="/" className="text-primary mt-4 inline-block hover:underline">← Back to home</Link></div></div>);
+  if (!product) return (<div className="min-h-screen bg-background"><Navbar /><div className="container mx-auto px-4 py-32 text-center"><h1 className="text-2xl font-display font-bold">Product not found 😢</h1><Link to="/" className="text-primary mt-4 inline-block hover:underline font-bold">← Back to home</Link></div></div>);
 
   return (
     <div className="min-h-screen bg-background">
       <Navbar showSearch={false} />
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4 lg:px-8">
-          <Link to="/products" className="inline-flex items-center gap-2 text-primary hover:underline mb-8"><ArrowLeft className="w-4 h-4" /> Back to products</Link>
+          <Link to="/products" className="inline-flex items-center gap-2 text-primary hover:underline mb-8 font-bold"><ArrowLeft className="w-4 h-4" /> Back to products</Link>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-            <div className="rounded-2xl overflow-hidden shadow-warm"><img src={product.image_url} alt={product.name} loading="eager" className="w-full aspect-square object-cover" /></div>
+            <div className="rounded-3xl overflow-hidden shadow-lg"><img src={product.image_url} alt={product.name} loading="eager" className="w-full aspect-square object-cover" /></div>
             <div className="flex flex-col justify-center space-y-6">
-              <span className="text-sm text-primary font-medium uppercase tracking-wider">{product.categories?.name || 'Uncategorized'}</span>
+              <span className="text-sm text-secondary font-bold uppercase tracking-wider">{product.categories?.name || 'Uncategorized'}</span>
               <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground">{product.name}</h1>
-              <p className="text-3xl font-bold text-primary">৳{Number(product.price).toFixed(0)}</p>
+              <p className="text-3xl font-extrabold text-primary">৳{Number(product.price).toFixed(0)}</p>
               <div className="text-muted-foreground leading-relaxed whitespace-pre-line">{product.description}</div>
             </div>
           </div>
           {related.length > 0 && (
             <section className="mt-16 lg:mt-24">
-              <h2 className="text-2xl md:text-3xl font-display font-semibold mb-8">Explore Other Products</h2>
+              <h2 className="text-2xl md:text-3xl font-display font-bold mb-8">More Sweets 🍬</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-                {related.map((item) => (
-                  <Link key={item.id} to={`/product/${item.id}`} className="card-sweet group">
-                    <div className="aspect-square overflow-hidden"><img src={item.image_url} alt={item.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" /></div>
+                {related.map(item => (
+                  <Link key={item.id} to={`/product/${item.id}`} className="group bg-card rounded-3xl overflow-hidden border border-border/50 hover:shadow-lg hover:-translate-y-1 transition-all">
+                    <div className="aspect-square overflow-hidden"><img src={item.image_url} alt={item.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
                     <div className="p-4">
-                      <span className="text-xs text-primary font-medium uppercase">{item.categories?.name}</span>
-                      <h3 className="font-display text-lg font-semibold text-foreground mt-1 truncate">{item.name}</h3>
-                      <p className="text-primary font-bold mt-1">৳{Number(item.price).toFixed(0)}</p>
+                      <span className="text-xs text-secondary font-bold uppercase">{item.categories?.name}</span>
+                      <h3 className="font-display text-lg font-bold text-foreground mt-1 truncate">{item.name}</h3>
+                      <p className="text-primary font-extrabold mt-1">৳{Number(item.price).toFixed(0)}</p>
                     </div>
                   </Link>
                 ))}
