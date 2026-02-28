@@ -38,7 +38,7 @@ const ReviewsManager = () => {
     setLoading(true);
     // Try join. If the relationship isn't present in your schema, you'll still get review data.
     const { data, error } = await supabase
-      .from('reviews')
+      .from('reviews' as any)
       .select('id,product_id,user_id,rating,comment,reviewer_name,created_at,products(name)')
       .limit(5000);
 
@@ -80,7 +80,7 @@ const ReviewsManager = () => {
 
   const deleteReview = async (id: string) => {
     if (!confirm('Delete this review permanently?')) return;
-    const { error } = await supabase.from('reviews').delete().eq('id', id);
+    const { error } = await supabase.from('reviews' as any).delete().eq('id', id);
     if (error) {
       toast({ title: 'Failed to delete review', description: error.message, variant: 'destructive' });
       return;

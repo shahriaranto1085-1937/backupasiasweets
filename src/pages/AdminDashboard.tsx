@@ -11,14 +11,14 @@ import { Package, FolderOpen, MessageSquare, Clock, Phone, ArrowRight, AlertCirc
 const DashboardHome = () => {
   const navigate = useNavigate();
   const [stats, setStats] = useState({ products: 0, categories: 0, pendingTickets: 0 });
-  const [pendingTickets, setPendingTickets] = useState<{ id: string; subject: string; phone_number?: string | null; created_at: string }[]>([]);
+  const [pendingTickets, setPendingTickets] = useState<{ id: string; subject: string; created_at: string }[]>([]);
 
   useEffect(() => {
     const fetchStats = async () => {
       const [{ count: pCount }, { count: cCount }, { data: pending, count: tCount }] = await Promise.all([
         supabase.from('products').select('*', { count: 'exact', head: true }),
         supabase.from('categories').select('*', { count: 'exact', head: true }),
-        supabase.from('support_tickets').select('id, subject, phone_number, created_at', { count: 'exact' }).eq('status', 'pending').order('created_at', { ascending: false }).limit(10),
+        supabase.from('support_tickets').select('id, subject, created_at', { count: 'exact' }).eq('status', 'pending').order('created_at', { ascending: false }).limit(10),
       ]);
       setStats({ products: pCount || 0, categories: cCount || 0, pendingTickets: tCount || 0 });
       setPendingTickets(pending || []);
@@ -121,9 +121,9 @@ const DashboardHome = () => {
                     <span className="text-xs text-muted-foreground">
                       {new Date(t.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
-                    {t.phone_number && (
+                    {(t as any).phone_number && (
                       <span className="text-xs text-muted-foreground inline-flex items-center gap-1">
-                        <Phone className="w-3 h-3" />{t.phone_number}
+                        <Phone className="w-3 h-3" />{(t as any).phone_number}
                       </span>
                     )}
                   </div>

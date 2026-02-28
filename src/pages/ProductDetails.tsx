@@ -107,8 +107,7 @@ const ProductDetails = () => {
   const [existingReview, setExistingReview] = useState<Review | null>(null);
 
   const fetchReviews = async (productId: string) => {
-    const { data } = await supabase
-      .from('reviews')
+    const { data } = await (supabase.from as any)('reviews')
       .select('*')
       .eq('product_id', productId)
       .order('created_at', { ascending: false });
@@ -183,14 +182,12 @@ const ProductDetails = () => {
     const reviewerName = user.id;
 
     if (existingReview) {
-      await supabase
-        .from('reviews')
+      await (supabase.from as any)('reviews')
         .update({ rating: myRating, comment: myComment.trim() || null, reviewer_name: reviewerName })
         .eq('id', existingReview.id);
       toast({ title: 'Review updated!' });
     } else {
-      await supabase
-        .from('reviews')
+      await (supabase.from as any)('reviews')
         .insert({ product_id: id, user_id: user.id, rating: myRating, comment: myComment.trim() || null, reviewer_name: reviewerName });
       toast({ title: 'Review submitted!' });
     }
@@ -201,7 +198,7 @@ const ProductDetails = () => {
 
   const handleDeleteReview = async (reviewId: string) => {
     if (!confirm('Are you sure you want to permanently delete this review?')) return;
-    const { error } = await supabase.from('reviews').delete().eq('id', reviewId);
+    const { error } = await (supabase.from as any)('reviews').delete().eq('id', reviewId);
     if (error) {
       toast({ title: 'Failed to delete review', variant: 'destructive' });
     } else {

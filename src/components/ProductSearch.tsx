@@ -171,7 +171,7 @@ const ProductSearch = () => {
         await Promise.all([
           supabase.from('products').select('id,name,price,image_url,details,created_at,categories(name)').order('created_at', { ascending: false }),
           supabase.from('categories').select('*').order('name'),
-          supabase.from('reviews').select('product_id, rating'),
+          (supabase.from as any)('reviews').select('product_id, rating'),
         ]);
 
       if (pErr) console.error(pErr);
