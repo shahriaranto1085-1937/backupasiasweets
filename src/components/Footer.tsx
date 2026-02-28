@@ -1,81 +1,60 @@
 import { Facebook, Instagram, Phone, MapPin, Mail } from 'lucide-react';
+import logo from '@/assets/logo.png';
 
 const Footer = () => {
   return (
-    <footer className="bg-foreground text-background relative overflow-hidden">
-      {/* Decorative gold line */}
-      <div className="h-1 bg-gradient-golden" />
-
-      <div className="container mx-auto px-4 lg:px-8 py-16 lg:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-14">
+    <footer className="bg-foreground text-background">
+      <div className="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          {/* Brand */}
           <div>
-            <span className="font-serif text-3xl font-bold text-primary">Asia Sweets</span>
-            <p className="text-sm text-background/60 leading-relaxed mt-5">
+            <img src={logo} alt="Asia Sweetmeat" className="h-12 w-auto mb-4 drop-shadow-md" style={{ filter: 'drop-shadow(0 0 1px rgba(255,255,255,0.3))' }} />
+            <p className="text-sm text-background/70 leading-relaxed">
               Traditional sweetmeat shop offering quality sweets made with care and authenticity since 2003.
             </p>
-            <div className="flex gap-3 mt-6">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary hover:text-foreground transition-all duration-300 hover:-translate-y-1" aria-label="Facebook">
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary hover:text-foreground transition-all duration-300 hover:-translate-y-1" aria-label="Instagram">
-                <Instagram className="w-5 h-5" />
-              </a>
+            <div className="flex gap-3 mt-5">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary transition-colors duration-200" aria-label="Facebook"><Facebook className="w-5 h-5" /></a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary transition-colors duration-200" aria-label="Instagram"><Instagram className="w-5 h-5" /></a>
             </div>
           </div>
 
+          {/* Quick Links */}
           <div>
-            <h3 className="font-serif text-lg font-semibold mb-5 text-background">Quick Links</h3>
-            <ul className="space-y-3">
+            <h3 className="font-display text-lg font-semibold mb-4">Quick Links</h3>
+            <ul className="space-y-2.5">
               {[{ label: 'Home', href: '/#home' }, { label: 'About Us', href: '/#about' }, { label: 'Products', href: '/products' }].map(link => (
-                <li key={link.label}>
-                  <a href={link.href} className="text-sm text-background/50 hover:text-primary transition-colors duration-200 hover:translate-x-1 inline-block">{link.label}</a>
-                </li>
+                <li key={link.label}><a href={link.href} className="text-sm text-background/70 hover:text-primary transition-colors">{link.label}</a></li>
               ))}
             </ul>
           </div>
 
+          {/* Contact */}
           <div>
-            <h3 className="font-serif text-lg font-semibold mb-5 text-background">Contact Us</h3>
-            <ul className="space-y-4">
-              <li className="flex items-center gap-3 text-sm text-background/50">
-                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                  <Phone className="w-3.5 h-3.5 text-primary" />
-                </div>
-                <span>(+880) 1986-999-889</span>
-              </li>
-              <li className="flex items-center gap-3 text-sm text-background/50">
-                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                  <Mail className="w-3.5 h-3.5 text-primary" />
-                </div>
-                <span>hello@asiasweets.com</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm text-background/50">
-                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-0.5">
-                  <MapPin className="w-3.5 h-3.5 text-primary" />
-                </div>
-                <span>123 Sweet Lane, Dhaka, Bangladesh</span>
-              </li>
+            <h3 className="font-display text-lg font-semibold mb-4">Contact Us</h3>
+            <ul className="space-y-3">
+              <li className="flex items-center gap-3 text-sm text-background/70"><Phone className="w-4 h-4 text-primary flex-shrink-0" /><span>(+880) 1986-999-889</span></li>
+              <li className="flex items-center gap-3 text-sm text-background/70"><Mail className="w-4 h-4 text-primary flex-shrink-0" /><span>hello@asiasweetmeat.com</span></li>
+              <li className="flex items-start gap-3 text-sm text-background/70"><MapPin className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" /><span>123 Sweet Lane, Dhaka, Bangladesh</span></li>
             </ul>
           </div>
 
+          {/* Help */}
           <div>
-            <h3 className="font-serif text-lg font-semibold mb-5 text-background">Help Center</h3>
-            <ul className="space-y-3">
+            <h3 className="font-display text-lg font-semibold mb-4">Help Center</h3>
+            <ul className="space-y-2.5">
               {['Get in Touch', 'FAQs', 'Store Hours', 'Order Information'].map(item => (
-                <li key={item}>
-                  <a href="#" className="text-sm text-background/50 hover:text-primary transition-colors duration-200 hover:translate-x-1 inline-block">{item}</a>
-                </li>
+                <li key={item}><a href="#" className="text-sm text-background/70 hover:text-primary transition-colors">{item}</a></li>
               ))}
             </ul>
           </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-background/10">
+        <div className="mt-12 pt-8 border-t border-background/10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-background/40">© {new Date().getFullYear()} Asia Sweets. All rights reserved.</p>
+            <p className="text-sm text-background/50">© {new Date().getFullYear()} Asia Sweetmeat. All rights reserved.</p>
             <div className="flex gap-6">
-              <a href="#" className="text-sm text-background/40 hover:text-primary transition-colors">Privacy Policy</a>
-              <a href="#" className="text-sm text-background/40 hover:text-primary transition-colors">Terms of Service</a>
+              <a href="#" className="text-sm text-background/50 hover:text-primary transition-colors">Privacy Policy</a>
+              <a href="#" className="text-sm text-background/50 hover:text-primary transition-colors">Terms of Service</a>
             </div>
           </div>
         </div>

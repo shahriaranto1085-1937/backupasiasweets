@@ -1,68 +1,67 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
 
-serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+Deno.serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders })
   }
 
   try {
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(supabaseUrl, serviceRoleKey);
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+    const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
 
-    const adminEmail = "admin@admin.local";
-    const adminPassword = "admin123456";
+    const supabase = createClient(supabaseUrl, serviceRoleKey, {
+      auth: { autoRefreshToken: false, persistSession: false }
+    })
+
+    const adminEmail = 'shuddho@admin.local'
+    const adminPassword = 'anonYmous@1937'
 
     // Check if admin already exists
-    const { data: existingUsers } = await supabase.auth.admin.listUsers();
-    const adminUser = existingUsers?.users?.find(u => u.email === adminEmail);
+    const { data: existingUsers } = await supabase.auth.admin.listUsers()
+    const adminExists = existingUsers?.users?.some(u => u.email === adminEmail)
 
-    if (adminUser) {
-      // Check if role already assigned
-      const { data: role } = await supabase
-        .from("user_roles")
-        .select("id")
-        .eq("user_id", adminUser.id)
-        .eq("role", "admin")
-        .maybeSingle();
-
-      if (!role) {
-        await supabase.from("user_roles").insert({ user_id: adminUser.id, role: "admin" });
-      }
-
-      return new Response(JSON.stringify({ message: "Admin already exists" }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    if (adminExists) {
+      return new Response(
+        JSON.stringify({ message: 'Admin user already exists' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
     }
 
-    // Create admin user
+    // Create admin user (password is hashed internally by Supabase Auth)
     const { data: newUser, error: createError } = await supabase.auth.admin.createUser({
       email: adminEmail,
       password: adminPassword,
       email_confirm: true,
-    });
+      user_metadata: { username: 'shuddho' }
+    })
 
-    if (createError) throw createError;
+    if (createError) {
+      throw new Error(`Failed to create admin user: ${createError.message}`)
+    }
 
     // Assign admin role
-    await supabase.from("user_roles").insert({
-      user_id: newUser.user.id,
-      role: "admin",
-    });
+    const { error: roleError } = await supabase
+      .from('user_roles')
+      .insert({ user_id: newUser.user.id, role: 'admin' })
 
-    return new Response(JSON.stringify({ message: "Admin created successfully" }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    if (roleError) {
+      throw new Error(`Failed to assign admin role: ${roleError.message}`)
+    }
+
+    return new Response(
+      JSON.stringify({ message: 'Admin user created successfully' }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    )
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    return new Response(
+      JSON.stringify({ error: errorMessage }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    )
   }
-});
+})

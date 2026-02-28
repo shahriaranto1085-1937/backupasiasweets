@@ -13,6 +13,7 @@ export const useAuth = () => {
 
     const applySession = async (s: Session | null) => {
       if (!alive) return;
+
       setSession(s);
       setUser(s?.user ?? null);
 
@@ -22,6 +23,7 @@ export const useAuth = () => {
         return;
       }
 
+      // User exists -> check role
       try {
         const { data, error } = await supabase
           .from("user_roles")
@@ -32,8 +34,10 @@ export const useAuth = () => {
 
         if (error) throw error;
         if (!alive) return;
+
         setIsAdmin(!!data);
-      } catch {
+      } catch (e) {
+        // If role lookup fails, do NOT infinite-load
         if (!alive) return;
         setIsAdmin(false);
       } finally {
@@ -42,10 +46,12 @@ export const useAuth = () => {
       }
     };
 
+    // 1) Initial session fetch
     supabase.auth.getSession().then(({ data }) => {
       applySession(data.session);
     });
 
+    // 2) Listen for changes
     const { data } = supabase.auth.onAuthStateChange((_event, newSession) => {
       applySession(newSession);
     });
@@ -58,7 +64,10 @@ export const useAuth = () => {
 
   const loginAsAdmin = async (username: string, password: string) => {
     const email = `${username}@admin.local`;
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     if (error) throw error;
     return data;
   };
