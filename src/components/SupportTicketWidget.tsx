@@ -154,7 +154,7 @@ const SupportTicketWidget = () => {
 
     const { data: admins } = await supabase.from('user_roles').select('user_id').eq('role', 'admin');
     if (admins) {
-      await supabase.from('notifications').insert(admins.map(a => ({ user_id: a.user_id, ticket_id: ticket.id, message: `New support ticket: "${newSubject.trim()}"` })));
+      await supabase.from('notifications').insert(admins.map(a => ({ user_id: a.user_id, ticket_id: ticket.id, title: 'New Ticket', message: `New support ticket: "${newSubject.trim()}"` })));
     }
 
     setNewSubject(''); setNewFirstMessage(''); setNewPhone(''); setImageFile(null); setImagePreview(null);
@@ -174,7 +174,7 @@ const SupportTicketWidget = () => {
 
     const { data: admins } = await supabase.from('user_roles').select('user_id').eq('role', 'admin');
     if (admins) {
-      await supabase.from('notifications').insert(admins.map(a => ({ user_id: a.user_id, ticket_id: activeTicket.id, message: `New reply on: "${activeTicket.subject}"` })));
+      await supabase.from('notifications').insert(admins.map(a => ({ user_id: a.user_id, ticket_id: activeTicket.id, title: 'New Reply', message: `New reply on: "${activeTicket.subject}"` })));
     }
 
     setNewMessage(''); setImageFile(null); setImagePreview(null); setSending(false);

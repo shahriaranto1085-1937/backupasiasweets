@@ -113,7 +113,7 @@ const TicketsManager = () => {
     if (imageFile) { imgUrl = await uploadImage(imageFile); }
 
     await supabase.from('ticket_messages').insert({ ticket_id: activeTicket.id, sender_id: user.id, message: newMessage.trim() || '📷 Photo', is_admin: true, image_url: imgUrl });
-    await supabase.from('notifications').insert({ user_id: activeTicket.user_id, ticket_id: activeTicket.id, message: `Admin replied to: "${activeTicket.subject}"` });
+    await supabase.from('notifications').insert({ user_id: activeTicket.user_id, ticket_id: activeTicket.id, title: 'Admin Reply', message: `Admin replied to: "${activeTicket.subject}"` });
 
     setNewMessage(''); setImageFile(null); setImagePreview(null); setSending(false);
   };
