@@ -11,9 +11,9 @@ const MapSection = () => {
             Come experience the taste of tradition at our shop. We'd love to welcome you!
           </p>
         </div>
-        <div className="rounded-2xl overflow-hidden shadow-lg border border-border">
+        <div className="rounded-2xl overflow-hidden shadow-lg border border-border relative">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14607.6!2d90.399507!3d23.749!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b087026b81%3A0x9420a25c07b26f06!2sAsia+Sweetmeat!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1826!2d90.399507!3d23.749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b087026b81%3A0x9420a25c07b26f06!2sAsia%20Sweetmeat!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd"
             width="100%"
             height="450"
             style={{ border: 0 }}
@@ -23,6 +23,16 @@ const MapSection = () => {
             title="Asia Sweetmeat Location"
             className="w-full"
           />
+        </div>
+        <div className="mt-4 text-center">
+          <a
+            href="https://maps.app.goo.gl/ZvKYD9BoFMtRdxSc9"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
+          >
+            📍 Open in Google Maps
+          </a>
         </div>
       </div>
     </section>
