@@ -17,18 +17,27 @@ export type Database = {
       categories: {
         Row: {
           created_at: string
+          description: string | null
           id: string
+          image_url: string | null
           name: string
+          name_bn: string | null
         }
         Insert: {
           created_at?: string
+          description?: string | null
           id?: string
+          image_url?: string | null
           name: string
+          name_bn?: string | null
         }
         Update: {
           created_at?: string
+          description?: string | null
           id?: string
+          image_url?: string | null
           name?: string
+          name_bn?: string | null
         }
         Relationships: []
       }
@@ -36,25 +45,28 @@ export type Database = {
         Row: {
           created_at: string
           id: string
-          is_read: boolean
+          is_read: boolean | null
           message: string
-          ticket_id: string
+          ticket_id: string | null
+          title: string
           user_id: string
         }
         Insert: {
           created_at?: string
           id?: string
-          is_read?: boolean
+          is_read?: boolean | null
           message: string
-          ticket_id: string
+          ticket_id?: string | null
+          title: string
           user_id: string
         }
         Update: {
           created_at?: string
           id?: string
-          is_read?: boolean
+          is_read?: boolean | null
           message?: string
-          ticket_id?: string
+          ticket_id?: string | null
+          title?: string
           user_id?: string
         }
         Relationships: [
@@ -69,31 +81,46 @@ export type Database = {
       }
       products: {
         Row: {
-          category_id: string
+          category_id: string | null
           created_at: string
-          details: string
+          description: string | null
+          description_bn: string | null
           id: string
-          image_url: string
+          image_url: string | null
+          is_available: boolean | null
+          is_popular: boolean | null
           name: string
+          name_bn: string | null
           price: number
+          updated_at: string
         }
         Insert: {
-          category_id: string
+          category_id?: string | null
           created_at?: string
-          details: string
+          description?: string | null
+          description_bn?: string | null
           id?: string
-          image_url: string
+          image_url?: string | null
+          is_available?: boolean | null
+          is_popular?: boolean | null
           name: string
+          name_bn?: string | null
           price: number
+          updated_at?: string
         }
         Update: {
-          category_id?: string
+          category_id?: string | null
           created_at?: string
-          details?: string
+          description?: string | null
+          description_bn?: string | null
           id?: string
-          image_url?: string
+          image_url?: string | null
+          is_available?: boolean | null
+          is_popular?: boolean | null
           name?: string
+          name_bn?: string | null
           price?: number
+          updated_at?: string
         }
         Relationships: [
           {
@@ -105,49 +132,10 @@ export type Database = {
           },
         ]
       }
-      reviews: {
-        Row: {
-          comment: string | null
-          created_at: string
-          id: string
-          product_id: string
-          rating: number
-          reviewer_name: string
-          user_id: string
-        }
-        Insert: {
-          comment?: string | null
-          created_at?: string
-          id?: string
-          product_id: string
-          rating: number
-          reviewer_name?: string
-          user_id: string
-        }
-        Update: {
-          comment?: string | null
-          created_at?: string
-          id?: string
-          product_id?: string
-          rating?: number
-          reviewer_name?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "reviews_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "products"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       support_tickets: {
         Row: {
           created_at: string
           id: string
-          phone_number: string | null
           status: string
           subject: string
           updated_at: string
@@ -156,7 +144,6 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
-          phone_number?: string | null
           status?: string
           subject: string
           updated_at?: string
@@ -165,7 +152,6 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
-          phone_number?: string | null
           status?: string
           subject?: string
           updated_at?: string
@@ -177,7 +163,6 @@ export type Database = {
         Row: {
           created_at: string
           id: string
-          image_url: string | null
           is_admin: boolean
           message: string
           sender_id: string
@@ -186,7 +171,6 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
-          image_url?: string | null
           is_admin?: boolean
           message: string
           sender_id: string
@@ -195,7 +179,6 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
-          image_url?: string | null
           is_admin?: boolean
           message?: string
           sender_id?: string

@@ -5,6 +5,7 @@ import HeroSection from '@/components/HeroSection';
 import PopularItems from '@/components/PopularItems';
 import MenuPreview from '@/components/MenuPreview';
 import AboutSection from '@/components/AboutSection';
+import MapSection from '@/components/MapSection';
 import Footer from '@/components/Footer';
 import SupportTicketWidget from '@/components/SupportTicketWidget';
 
@@ -29,6 +30,7 @@ const Index = () => {
         <PopularItems />
         <MenuPreview />
         <AboutSection />
+        <MapSection />
       </main>
       <Footer />
       <SupportTicketWidget />
